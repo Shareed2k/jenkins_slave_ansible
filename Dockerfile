@@ -32,7 +32,9 @@ ENV ANSIBLE_LIBRARY /opt/ansible/ansible/library
 RUN apt-get -q update &&\
     DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew"  --no-install-recommends openjdk-7-jre-headless &&\
     apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin &&\
-    ansible-galaxy install carlosbuenosvinos.ansistrano-deploy carlosbuenosvinos.ansistrano-rollback
+    ansible-galaxy install carlosbuenosvinos.ansistrano-deploy carlosbuenosvinos.ansistrano-rollback &&\
+    cp -R /root/.ansible/roles/carlosbuenosvinos.ansistrano-deploy /etc/ansible/roles/ &&\
+    cp -R /root/.ansible/roles/carlosbuenosvinos.ansistrano-rollback /etc/ansible/roles/
 
 # Set user jenkins to the image
 RUN echo "PATH=${PATH}:/opt/ansible/ansible/bin" >> /etc/environment && \
