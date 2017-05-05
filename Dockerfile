@@ -32,13 +32,13 @@ ENV ANSIBLE_LIBRARY /opt/ansible/ansible/library
 RUN apt-get -q update &&\
     DEBIAN_FRONTEND="noninteractive" apt-get -q install -y -o Dpkg::Options::="--force-confnew"  --no-install-recommends openjdk-7-jre-headless &&\
     apt-get -q clean -y && rm -rf /var/lib/apt/lists/* && rm -f /var/cache/apt/*.bin &&\
-    ansible-galaxy install carlosbuenosvinos.ansistrano-deploy carlosbuenosvinos.ansistrano-rollback
 
 # Set user jenkins to the image
 RUN echo "PATH=${PATH}:/opt/ansible/ansible/bin" >> /etc/environment && \
 	echo "PYTHONPATH=/opt/ansible/ansible/lib" >> /etc/environment &&\
 	echo "ANSIBLE_LIBRARY=/opt/ansible/ansible/library" >> /etc/environment &&\
 	useradd -m -d /home/jenkins -s /bin/bash jenkins &&\
+    ansible-galaxy install carlosbuenosvinos.ansistrano-deploy carlosbuenosvinos.ansistrano-rollback &&\
     echo "jenkins:jenkins" | chpasswd
 
 # Standard SSH port
